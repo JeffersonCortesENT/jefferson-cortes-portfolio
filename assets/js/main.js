@@ -247,7 +247,7 @@
             sentMessage.style.display = "none";
     
             // Extract form data
-            const to = formData.get("email"); // Make sure your form has an input with name="email"
+            const from = formData.get("email"); // Make sure your form has an input with name="email"
             const subject = formData.get("subject"); // Form input with name="subject"
             const message = formData.get("message"); // Form input with name="message"
     
@@ -255,7 +255,7 @@
                 let response = await fetch("https://jefferson-cortes-portfolio.vercel.app/api/send-email", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ to, subject, message }),
+                  body: JSON.stringify({ from, subject, message }),
                 });
     
                 const result = await response.json(); // Get JSON response
@@ -267,6 +267,7 @@
                     throw new Error(result.message || "Failed to send email");
                 }
             } catch (error) {
+              console.log({message: error.message, condition: error.message != 'The form action property is not set!'});
               if (error.message != 'The form action property is not set!') {
                 errorMessage.style.display = "block";
                 errorMessage.textContent = error.message;
