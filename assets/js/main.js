@@ -267,7 +267,6 @@
                     throw new Error(result.message || "Failed to send email");
                 }
             } catch (error) {
-              console.log({message: error.message, condition: error.message != 'The form action property is not set!'});
               errorMessage.style.display = "block";
               errorMessage.textContent = error.message;
             } finally {
