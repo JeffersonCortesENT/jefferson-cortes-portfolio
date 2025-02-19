@@ -7,7 +7,27 @@
   */
 
   // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'jeffersoncortes4554@gmail.com';
+  function loadEnv($path = '.env') {
+      if (!file_exists($path)) return;
+
+      $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+      foreach ($lines as $line) {
+          if (strpos(trim($line), '#') === 0) continue; // Skip comments
+
+          list($key, $value) = explode('=', $line, 2);
+          $key = trim($key);
+          $value = trim($value);
+
+          putenv("$key=$value");
+          $_ENV[$key] = $value;
+          $_SERVER[$key] = $value;
+      }
+  }
+
+  // Load environment variables
+  loadEnv();
+
+  $receiving_email_address = getenv('SMTP_USER');
 
   if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
     include( $php_email_form );
@@ -25,10 +45,10 @@
 
   // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
   $contact->smtp = array(
-    'host' => 'smtp.gmail.com',
-    'username' => 'jeffersoncortes4554@gmail.com',
-    'password' => 'qcfd rwsu xhay mijz',
-    'port' => '587'
+    'host' => getenv('SMTP_HOST'),
+    'username' => getenv('SMTP_USER'),
+    'password' => getenv('SMTP_PASS'),
+    'port' => getenv('SMTP_PORT')
   );
 
   $contact->add_message( $_POST['name'], 'From');
