@@ -263,14 +263,13 @@
                 if (response.ok) {
                     sentMessage.style.display = "block";
                     contactForm.reset(); // Reset form fields
-                    errorMessage.style.display = "none";
+                } else {
+                    throw new Error(result.message || "Failed to send email");
                 }
             } catch (error) {
               console.log({message: error.message, condition: error.message != 'The form action property is not set!'});
-              if (error.message != 'The form action property is not set!') {
-                errorMessage.style.display = "block";
-                errorMessage.textContent = error.message;
-              }
+              errorMessage.style.display = "block";
+              errorMessage.textContent = error.message;
             } finally {
                 loading.style.display = "none";
             }
