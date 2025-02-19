@@ -252,7 +252,7 @@
             const message = formData.get("message"); // Form input with name="message"
     
             try {
-                let response = await fetch("https://jefferson-cortes-portfolio.vercel.app/api/send-email", {
+                let response = await fetch("/api/send-email", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({ from, subject, message }),
