@@ -1,6 +1,9 @@
 import nodemailer from "nodemailer";
 
 export default async function handler(req, res) {
+    console.log("SMTP_HOST:", process.env.SMTP_HOST);
+    console.log("SMTP_PORT:", process.env.SMTP_PORT);
+    console.log("SMTP_USER:", process.env.SMTP_USER);
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed" });
     }
