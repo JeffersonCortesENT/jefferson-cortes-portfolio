@@ -226,4 +226,54 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  /**
+   * Handle contact form submission via AJAX
+   */
+  const contactForm = document.querySelector(".php-email-form");
+
+  if (contactForm) {
+    if (contactForm) {
+        contactForm.addEventListener("submit", async function (e) {
+            e.preventDefault(); // Prevent default form submission
+    
+            const formData = new FormData(contactForm);
+            const loading = contactForm.querySelector(".loading");
+            const errorMessage = contactForm.querySelector(".error-message");
+            const sentMessage = contactForm.querySelector(".sent-message");
+    
+            // Show loading indicator
+            loading.style.display = "block";
+            errorMessage.style.display = "none";
+            sentMessage.style.display = "none";
+    
+            // Extract form data
+            const to = formData.get("email"); // Make sure your form has an input with name="email"
+            const subject = formData.get("subject"); // Form input with name="subject"
+            const message = formData.get("message"); // Form input with name="message"
+    
+            try {
+                let response = await fetch("https://jefferson-cortes-portfolio.vercel.app/api/send-email", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ to, subject, message }),
+                });
+    
+                const result = await response.json(); // Get JSON response
+    
+                if (response.ok) {
+                    sentMessage.style.display = "block";
+                    contactForm.reset(); // Reset form fields
+                } else {
+                    throw new Error(result.message || "Failed to send email");
+                }
+            } catch (error) {
+                errorMessage.style.display = "block";
+                errorMessage.textContent = error.message;
+            } finally {
+                loading.style.display = "none";
+            }
+        });
+    }
+  }
+
 })();
