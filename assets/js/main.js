@@ -263,6 +263,7 @@
                 if (response.ok) {
                     sentMessage.style.display = "block";
                     contactForm.reset(); // Reset form fields
+                    errorMessage.style.display = "none";
                 }
             } catch (error) {
               console.log({message: error.message, condition: error.message != 'The form action property is not set!'});
