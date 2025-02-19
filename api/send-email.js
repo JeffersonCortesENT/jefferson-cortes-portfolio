@@ -8,7 +8,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const { to, subject, message } = req.body;
+    const { from, subject, message } = req.body;
 
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
@@ -22,9 +22,9 @@ export default async function handler(req, res) {
 
     try {
         await transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to,
-            subject,
+            from: from,
+            to: process.env.SMTP_USER,
+            subject: subject,
             text: message,
         });
 

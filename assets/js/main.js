@@ -267,7 +267,7 @@
                     throw new Error(result.message || "Failed to send email");
                 }
             } catch (error) {
-              if (error.message !== 'The form action property is not set!') {
+              if (error.message != 'The form action property is not set!') {
                 errorMessage.style.display = "block";
                 errorMessage.textContent = error.message;
               }
