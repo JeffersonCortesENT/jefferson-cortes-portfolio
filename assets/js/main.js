@@ -263,8 +263,6 @@
                 if (response.ok) {
                     sentMessage.style.display = "block";
                     contactForm.reset(); // Reset form fields
-                } else {
-                    throw new Error(result.message || "Failed to send email");
                 }
             } catch (error) {
               console.log({message: error.message, condition: error.message != 'The form action property is not set!'});
